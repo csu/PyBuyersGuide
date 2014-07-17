@@ -1,4 +1,4 @@
-from PyBuyersGuide import BuyersGuide
+from buyersguide import BuyersGuide
 
 def main():
     bg = BuyersGuide()

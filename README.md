@@ -14,7 +14,7 @@ A Python API for the [MacRumors Buyer's Guide](http://buyersguide.macrumors.com/
     
     # get information on one specific product
     bg.get_product('iPhone')
-    
+
 ## Class: `Product`
 ### Properties
 * `name` – the name of the product (str)
