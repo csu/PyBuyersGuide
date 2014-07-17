@@ -17,8 +17,8 @@ A Python API for the MacRumors Buyer's Guide for Apple products.
     
 ## Class: `Product`
 ### Properties
-* `name`
-* `suggestion`
-* `days_since`
-* `average` – the average 
-* `history` – a list of how many days were between the past releases
+* `name` – the name of the product (str)
+* `suggestion` – the suggestion for buyers (list of strs)
+* `days_since` – days since the last release (int)
+* `average` – the average number of days between releases (int)
+* `history` – a history of how many days were between the past releases (list of ints)
