@@ -17,7 +17,7 @@ class BuyersGuide():
             days_since = product.find('span', class_=re.compile('count_')).string
             average = product.find('div', class_="right average").find('span', class_="days").string
             history = []
-            for entry in product.find('div', class_="right releases").find_all('span', class_="days"):
+            for entry in product.find('div', class_="row recent-releases").find_all('div', class_="days"):
                 history.append(entry.string)
             products.append(Product(name, suggestion, days_since, average, history))
         return products
