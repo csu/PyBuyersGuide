@@ -5,7 +5,7 @@ A Python API for the [MacRumors Buyer's Guide](http://buyersguide.macrumors.com/
 
 ## Usage
 
-    from PyBuyersGuide import BuyersGuide
+    from buyersguide import BuyersGuide
     
     bg = BuyersGuide()
     
