@@ -7,34 +7,31 @@ class BuyersGuide():
         html = requests.get('http://buyersguide.macrumors.com').text
         self.soup = BeautifulSoup(html)
 
+    @staticmethod
+    def parse_product(product, name=None):
+        if name is None:
+            name = product.find('h2').string
+        suggestion = []
+        for string in product.find('div', class_=re.compile('status')).strings:
+            suggestion.append(string)
+        days_since = int(product.find('span', class_=re.compile('count_')).string)
+        average = int(product.find('div', class_="right average").find('span', class_="days").string)
+        history = []
+        for entry in product.find('div', class_="row recent-releases").find_all('div', class_="days"):
+            history.append(int(entry.string))
+        return Product(name, suggestion, days_since, average, history)
+
     def get_products(self):
         products = []
         for product in self.soup.find_all('div', class_="guide_content"):
-            name = product.find('h2').string
-            suggestion = []
-            for string in product.find('div', class_=re.compile('status')).strings:
-                suggestion.append(string)
-            days_since = product.find('span', class_=re.compile('count_')).string
-            average = product.find('div', class_="right average").find('span', class_="days").string
-            history = []
-            for entry in product.find('div', class_="row recent-releases").find_all('div', class_="days"):
-                history.append(entry.string)
-            products.append(Product(name, suggestion, days_since, average, history))
+            products.append(self.parse_product(product))
         return products
 
     def get_product(self, product_name):
         for product in self.soup.find_all('div', class_="guide_content"):
             name = product.find('h2').string
             if name == product_name:
-                suggestion = []
-                for string in product.find('div', class_=re.compile('status')).strings:
-                    suggestion.append(string)
-                days_since = product.find('span', class_=re.compile('count_')).string
-                average = product.find('div', class_="right average").find('span', class_="days").string
-                history = []
-                for entry in product.find('div', class_="row recent-releases").find_all('div', class_="days"):
-                    history.append(entry.string)
-                return Product(name, suggestion, days_since, average, history)
+                return self.parse_product(product, name)
         return None
 
 class Product():
