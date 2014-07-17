@@ -22,6 +22,21 @@ class BuyersGuide():
             products.append(Product(name, suggestion, days_since, average, history))
         return products
 
+    def get_product(self, product_name):
+        for product in self.soup.find_all('div', class_="guide_content"):
+            name = product.find('h2').string
+            if name == product_name:
+                suggestion = []
+                for string in product.find('div', class_=re.compile('status')).strings:
+                    suggestion.append(string)
+                days_since = product.find('span', class_=re.compile('count_')).string
+                average = product.find('div', class_="right average").find('span', class_="days").string
+                history = []
+                for entry in product.find('div', class_="row recent-releases").find_all('div', class_="days"):
+                    history.append(entry.string)
+                return Product(name, suggestion, days_since, average, history)
+        return None
+
 class Product():
     def __init__(self, name, suggestion, days_since, average, history):
         self.name = name
